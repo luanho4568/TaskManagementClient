@@ -12,11 +12,13 @@ const axiosClient = axios.create({
 
 // Thêm interceptor để xử lý request/response
 axiosClient.interceptors.response.use(
-  (response) => response.data,
-  (error) => {
-    console.error("Lỗi API:", error);
-    return Promise.reject(error);
-  }
-);
-
+    (response) => response.data,
+    (error) => {
+      if (error.response) {
+        return Promise.reject(error.response.data); 
+      }
+      return Promise.reject({ message: "Lỗi kết nối đến server!" });
+    }
+  );
+  
 export default axiosClient;
