@@ -1,9 +1,9 @@
 import authApi from "../api/authApi";
 
 const authService = {
-  checkUserLogin: async () => {
+  CheckToken: async () => {
     try {
-      const res = await authApi.checkUserLogin();
+      const res = await authApi.CheckToken();
       return res;
     } catch (error) {
       return error;
@@ -19,9 +19,9 @@ const authService = {
     }
   },
 
-  logoutUser: async () => {
+  logoutUser: async (id) => {
     try {
-      const res = await authApi.logoutUser();
+      const res = await authApi.logoutUser(id);
       return res;
     } catch (error) {
       return error;

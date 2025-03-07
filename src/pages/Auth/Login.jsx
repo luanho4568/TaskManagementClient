@@ -18,9 +18,9 @@ const Login = ({ setIsLoggedIn }) => {
     }
     setLoading(true);
     const res = await accountService.loginUser({ email, password });
-    console.log(res);
     if (res.status === 0) {
       toast.success(res.message);
+      localStorage.setItem("token", res.token);
       setIsLoggedIn(true);
     } else if (res.status === -1) {
       toast.error(res.message);

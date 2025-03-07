@@ -1,4 +1,7 @@
+
+
 const AuthLayout = ({ children }) => {
+  
   return (
     <>
       <div className="h-screen host-bg flex justify-center items-center">
