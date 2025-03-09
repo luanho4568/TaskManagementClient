@@ -3,21 +3,26 @@ import AuthLayout from "../../components/layout/AuthLayout";
 import { FaUser, FaLock, FaGoogle, FaArrowRight } from "react-icons/fa6";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import accountService from "../../services/authService";
+import authApi from "../../api/authApi";
 
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({ email: false, password: false });
 
   const handleLogin = async () => {
-    if (!email || !password) {
+    let newErrors = { email: !email, password: !password };
+
+    setErrors(newErrors);
+
+    if (newErrors.email || newErrors.password) {
       toast.warn("Vui lòng nhập đủ thông tin!");
       return;
     }
     setLoading(true);
-    const res = await accountService.loginUser({ email, password });
+    const res = await authApi.loginUser({ email, password });
     if (res.status === 0) {
       toast.success(res.message);
       localStorage.setItem("token", res.token);
@@ -39,25 +44,59 @@ const Login = ({ setIsLoggedIn }) => {
       </h2>
 
       <div className="flex flex-col w-80">
-        <div className="flex items-center bg-gray-100 rounded-md p-4 mt-4">
-          <FaUser className="text-gray-500 text-lg mr-2" />
+        <div
+          className={`flex items-center border ${
+            errors.email ? "border-red-900" : "border-gray-100"
+          } bg-gray-100 rounded-md p-4 mt-4`}
+        >
+          <FaUser
+            className={`text-lg mr-2 ${
+              errors.email ? "text-red-500" : "text-gray-500"
+            }`}
+          />
           <input
             type="text"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (errors.email) setErrors({ ...errors, email: false });
+            }}
             className="bg-transparent w-full outline-none"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLogin();
+              }
+            }}
           />
         </div>
 
-        <div className="flex items-center bg-gray-100 rounded-md p-4 mt-4">
-          <FaLock className="text-gray-500 text-lg mr-2" />
+        <div
+          className={`flex items-center border ${
+            errors.password ? "border-red-900" : "border-gray-100"
+          } bg-gray-100 rounded-md p-4 mt-4`}
+        >
+          <FaLock
+            className={`text-lg mr-2 ${
+              errors.password ? "text-red-500" : "text-gray-500"
+            }`}
+          />
           <input
             type="password"
             placeholder="Mật khẩu"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (errors.password) setErrors({ ...errors, password: false });
+            }}
             className="bg-transparent w-full outline-none"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLogin();
+              }
+            }}
           />
         </div>
 
@@ -70,9 +109,17 @@ const Login = ({ setIsLoggedIn }) => {
             className="bg-blue-600 text-white p-4 rounded-md font-bold hover:bg-blue-700 transition"
             onClick={handleLogin}
             disabled={loading}
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLogin();
+              }
+            }}
           >
             {loading ? "Đang đăng nhập..." : "Đăng nhập"}
           </button>
+
           <button
             className="flex items-center gap-2 bg-gray-300 p-4 rounded-md font-bold text-gray-700 hover:bg-gray-400 transition"
             onClick={() => navigate("/register")}
@@ -80,12 +127,6 @@ const Login = ({ setIsLoggedIn }) => {
             <FaArrowRight /> Đăng ký
           </button>
         </div>
-      </div>
-
-      <div>
-        <button className="flex items-center justify-center gap-2 bg-red-600 text-white p-4 mt-4 w-80 rounded-md font-bold hover:bg-red-700 transition">
-          <FaGoogle size={20} /> Đăng nhập với Google
-        </button>
       </div>
     </AuthLayout>
   );

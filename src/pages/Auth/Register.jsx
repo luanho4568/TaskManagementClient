@@ -3,7 +3,7 @@ import AuthLayout from "../../components/layout/AuthLayout";
 import { FaUser, FaAt, FaLock, FaArrowLeft, FaGoogle } from "react-icons/fa6";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
-import authService from "../../services/authService";
+import authApi from "../../api/authApi";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -13,9 +13,28 @@ const Register = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
+    name: false,
+    confirmPass: false,
+  });
 
   const handleRegister = useCallback(async () => {
-    if (!email || !name || !password || !confirmPass) {
+    const newErrors = {
+      email: !email,
+      password: !password,
+      confirmPass: !confirmPass,
+      name: !name,
+    };
+    setErrors(newErrors);
+
+    if (
+      newErrors.email ||
+      newErrors.name ||
+      newErrors.password ||
+      newErrors.confirmPass
+    ) {
       toast.warn("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
@@ -26,7 +45,7 @@ const Register = () => {
     }
     setLoading(true);
 
-    const res = await authService.registerUser({ name, email, password });
+    const res = await authApi.registerUser({ name, email, password });
     if (res.status === 0) {
       navigate("/");
       toast.success(res.message);
@@ -47,45 +66,73 @@ const Register = () => {
 
       <div className="flex flex-col">
         <div className="flex gap-2">
-          <div className="flex items-center bg-gray-100 rounded-md p-4 mt-4">
-            <FaUser className="text-gray-500 text-lg mr-2" />
+          <div
+            className={`flex items-center border ${
+              errors.name ? "border-red-500" : "border-gray-100"
+            } bg-gray-100 rounded-md p-4 mt-4`}
+          >
+            <FaUser className={`text-lg mr-2 ${errors.name ? "text-red-500" : "text-gray-500"}`} />
             <input
               type="text"
               placeholder="Họ tên"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (errors.name) setErrors({ ...errors, name: false });
+              }}
               className="bg-transparent w-full outline-none"
             />
           </div>
-          <div className="flex items-center bg-gray-100 rounded-md p-4 mt-4">
-            <FaAt className="text-gray-500 text-lg mr-2" />
+          <div
+            className={`flex items-center border ${
+              errors.email ? "border-red-500" : "border-gray-100"
+            } bg-gray-100 rounded-md p-4 mt-4`}
+          >
+            <FaAt className={`text-lg mr-2 ${errors.email ? "text-red-500" : "text-gray-500"}`} />
             <input
               type="text"
               placeholder="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errors.email) setErrors({ ...errors, email: false });
+              }}
               className="bg-transparent w-full outline-none"
             />
           </div>
         </div>
         <div className="flex gap-2 mb-4">
-          <div className="flex items-center bg-gray-100 rounded-md p-4 mt-4">
-            <FaLock className="text-gray-500 text-lg mr-2" />
+          <div
+            className={`flex items-center border ${
+              errors.password ? "border-red-500" : "border-gray-100"
+            } bg-gray-100 rounded-md p-4 mt-4`}
+          >
+            <FaLock className={`text-lg mr-2 ${errors.password ? "text-red-500" : "text-gray-500"}`} />
             <input
               type="password"
               placeholder="Mật khẩu"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (errors.password) setErrors({ ...errors, password: false });
+              }}
               className="bg-transparent w-full outline-none"
             />
           </div>
-          <div className="flex items-center bg-gray-100 rounded-md p-4 mt-4">
-            <FaLock className="text-gray-500 text-lg mr-2" />
+          <div
+            className={`flex items-center border ${
+              errors.confirmPass ? "border-red-500" : "border-gray-100"
+            } bg-gray-100 rounded-md p-4 mt-4`}
+          >
+            <FaLock className={`text-lg mr-2 ${errors.confirmPass ? "text-red-500" : "text-gray-500"}`} />
             <input
               type="password"
               placeholder="Xác nhận mật khẩu"
               value={confirmPass}
-              onChange={(e) => setConfirmPass(e.target.value)}
+              onChange={(e) => {
+                setConfirmPass(e.target.value);
+                if (errors.confirmPass) setErrors({ ...errors, confirmPass: false });
+              }}
               className="bg-transparent w-full outline-none"
             />
           </div>
@@ -104,15 +151,17 @@ const Register = () => {
             onClick={handleRegister}
             disabled={loading}
             aria-busy={loading}
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleRegister();
+              }
+            }}
           >
             {loading ? "Đang xử lý..." : "Đăng ký"}
           </button>
         </div>
-      </div>
-      <div>
-        <button className="flex items-center justify-center gap-2 bg-red-600 text-white p-4 mt-4 w-92 rounded-md font-bold hover:bg-red-700 transition">
-          <FaGoogle size={20} /> Đăng nhập với Google
-        </button>
       </div>
     </AuthLayout>
   );

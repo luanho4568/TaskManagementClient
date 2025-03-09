@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import accountService from "../../services/authService";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,6 +9,7 @@ import {
 import Login from "../../pages/Auth/Login";
 import Register from "../../pages/Auth/Register";
 import Group from "../../pages/Group";
+import authApi from "../../api/authApi";
 
 const Layout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -25,13 +25,15 @@ const Layout = () => {
       }
 
       try {
-        const res = await accountService.CheckToken();
+        const res = await authApi.CheckToken();
         if (res.status === 0) {
+          localStorage.setItem("user", JSON.stringify({ nameid: res.data.nameid, fullname: res.data.unique_name }));
           setIsLoggedIn(true);
         } else {
           toast.warn(res.message);
           setIsLoggedIn(false);
           localStorage.removeItem("token");
+          localStorage.removeItem("nameid");
         }
       } catch (error) {
         console.error(error);
@@ -44,9 +46,7 @@ const Layout = () => {
   }, []);
 
   if (loading) {
-    return (
-        <div></div>
-    );
+    return <div></div>;
   }
 
   return (
@@ -55,7 +55,11 @@ const Layout = () => {
         <Route
           path="/"
           element={
-            isLoggedIn ? <Group /> : <Login setIsLoggedIn={setIsLoggedIn} />
+            isLoggedIn ? (
+              <Group setIsLoggedIn={setIsLoggedIn} />
+            ) : (
+              <Login setIsLoggedIn={setIsLoggedIn} />
+            )
           }
         />
         <Route path="/register" element={<Register />} />
@@ -63,7 +67,6 @@ const Layout = () => {
           path="/group"
           element={isLoggedIn ? <Group /> : <Navigate to="/" />}
         />
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
