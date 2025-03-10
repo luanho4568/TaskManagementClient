@@ -80,6 +80,12 @@ const Register = () => {
                 setName(e.target.value);
                 if (errors.name) setErrors({ ...errors, name: false });
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleRegister();
+                }
+              }}
               className="bg-transparent w-full outline-none"
             />
           </div>
@@ -96,6 +102,12 @@ const Register = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
                 if (errors.email) setErrors({ ...errors, email: false });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleRegister();
+                }
               }}
               className="bg-transparent w-full outline-none"
             />
@@ -116,6 +128,12 @@ const Register = () => {
                 setPassword(e.target.value);
                 if (errors.password) setErrors({ ...errors, password: false });
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleRegister();
+                }
+              }}
               className="bg-transparent w-full outline-none"
             />
           </div>
@@ -132,6 +150,12 @@ const Register = () => {
               onChange={(e) => {
                 setConfirmPass(e.target.value);
                 if (errors.confirmPass) setErrors({ ...errors, confirmPass: false });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleRegister();
+                }
               }}
               className="bg-transparent w-full outline-none"
             />

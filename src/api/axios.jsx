@@ -11,15 +11,22 @@ const axiosClient = axios.create({
   withCredentials: true, // Bắt buộc để gửi cookie từ BE
 });
 
+// Interceptor thêm token vào request
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
+
+  // Nếu request có FormData, đổi header sang multipart/form-data
+  if (config.data instanceof FormData) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  }
+
   return config;
 });
 
-// Thêm interceptor để xử lý request/response
+// Interceptor xử lý response
 axiosClient.interceptors.response.use(
   (response) => response.data,
   (error) => {

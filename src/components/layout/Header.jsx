@@ -7,24 +7,27 @@ import {
 import { useState } from "react";
 import authApi from "../../api/authApi";
 import { toast } from "react-toastify";
+import userApi from "../../api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ setIsLoggedIn }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
-
+  const navigator = useNavigate();
   const toggleDropdown = (menu) => {
     setActiveDropdown(activeDropdown === menu ? null : menu);
   };
   let user = JSON.parse(localStorage.getItem("user")) || {};
-  const fullName = user.fullname || "N/A";
+  let fullName = user.fullname || "N/A";
+  let id = user.nameid || null;
   const handleLogout = async () => {
     try {
-      const id = user.nameid || null;
       const res = await authApi.logoutUser({ id });
       if (res.status === 0) {
         localStorage.removeItem("token");
-        localStorage.removeItem("nameid");
+        localStorage.removeItem("user");
         toast.success(res.message);
         setIsLoggedIn(false);
+        navigator("/");
       } else {
         toast.error(res.message);
       }
@@ -32,8 +35,27 @@ const Header = ({ setIsLoggedIn }) => {
       console.error(error);
     }
   };
+
+  const handleGetProfile = async () => {
+    try {
+      const res = await userApi.getProfile({ id });
+      if (res.status === 0) {
+        toggleDropdown(null);
+        navigator("/profile",{state : res.data});
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleGetDocument = () => {
+    toast.info("Sắp diễn ra...");
+    toggleDropdown(null);
+  };
   return (
-    <div className="w-full min-h-16 host-bg text-white flex items-center justify-between px-4 shadow-md">
+    <div className="w-full h-16 host-bg text-white flex items-center justify-between px-4 shadow-md fixed top-0 left-0 z-50">
       <button
         className="bg-red-500 px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600"
         onClick={handleLogout}
@@ -80,10 +102,18 @@ const Header = ({ setIsLoggedIn }) => {
               <p className="border-b p-2 cursor-pointer hover:bg-gray-100">
                 {fullName}
               </p>
-              <p className="border-b p-2 cursor-pointer hover:bg-gray-100">
+              <p
+                className="border-b p-2 cursor-pointer hover:bg-gray-100"
+                onClick={handleGetDocument}
+              >
                 Tài liệu
               </p>
-              <p className="p-2 cursor-pointer hover:bg-gray-100">Hồ sơ</p>
+              <p
+                className="p-2 cursor-pointer hover:bg-gray-100"
+                onClick={handleGetProfile}
+              >
+                Hồ sơ
+              </p>
             </div>
           )}
         </div>

@@ -1,10 +1,8 @@
-import Header from "../components/layout/Header";
 
-const Group = ({ setIsLoggedIn }) => {
+const Group = () => {
   return (
     <>
-      <Header setIsLoggedIn={setIsLoggedIn} />
-      <h1>hi</h1>
+      <h1 className="p-20">hi</h1>
     </>
   );
 };
