@@ -4,9 +4,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../../pages/Auth/Login";
 import Register from "../../pages/Auth/Register";
 import authApi from "../../api/authApi";
-import GroupLayout from "./GroupLayout";
 import Profile from "../../pages/Profile/Profile";
 import Header from "./Header";
+import Group from "../../pages/Group/Group";
 
 const Layout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -59,7 +59,7 @@ const Layout = () => {
           path="/"
           element={
             isLoggedIn ? (
-              <GroupLayout />
+              <Group />
             ) : (
               <Login setIsLoggedIn={setIsLoggedIn} />
             )
@@ -68,7 +68,7 @@ const Layout = () => {
         <Route path="/register" element={<Register />} />
         <Route
           path="/group"
-          element={isLoggedIn ? <GroupLayout /> : <Navigate to="/" />}
+          element={isLoggedIn ? <Group /> : <Navigate to="/" />}
         />
 
         <Route path="/profile" element={<Profile />} />
