@@ -1,6 +1,6 @@
 import GroupList from "./GroupList";
 
-const Groups = () => {
+const Group = () => {
   return (
     <div className="w-full pt-20 sub-bg h-screen flex flex-col items-center">
       <GroupList />
@@ -8,4 +8,4 @@ const Groups = () => {
   );
 };
 
-export default Groups;
+export default Group;

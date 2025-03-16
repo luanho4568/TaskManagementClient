@@ -4,29 +4,36 @@ import {
   FaUserCircle,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { useState } from "react";
-import authApi from "../../api/authApi";
+import { useState, useEffect } from "react";
+import authApi from "../../../api/Client/authApi";
 import { toast } from "react-toastify";
-import userApi from "../../api/userApi";
+import userApi from "../../../api/Client/userApi";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ setIsLoggedIn }) => {
+const Header = ({ setIsLoggedIn, checkLogin }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user")) || {};
+    setUser(storedUser);
+    console.log(">>> check user : ", storedUser);
+  }, []);
+
   const navigator = useNavigate();
   const toggleDropdown = (menu) => {
     setActiveDropdown(activeDropdown === menu ? null : menu);
   };
-  let user = JSON.parse(localStorage.getItem("user")) || {};
-  let fullName = user.fullname || "N/A";
-  let id = user.nameid || null;
+  let fullName = user?.fullname || "N/A";
+  let id = user?.nameid || null;
   const handleLogout = async () => {
     try {
       const res = await authApi.logoutUser({ id });
       if (res.status === 0) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.clear();
         toast.success(res.message);
         setIsLoggedIn(false);
+       await checkLogin();
         navigator("/");
       } else {
         toast.error(res.message);
@@ -41,7 +48,7 @@ const Header = ({ setIsLoggedIn }) => {
       const res = await userApi.getProfile({ id });
       if (res.status === 0) {
         toggleDropdown(null);
-        navigator("/profile",{state : res.data});
+        navigator("/profile", { state: res.data });
       } else {
         toast.error(res.message);
       }

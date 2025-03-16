@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaTrash, FaUpload } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import userApi from "../../api/userApi";
+import userApi from "../../../api/Client/userApi";
 import { toast } from "react-toastify";
 
 const Profile = () => {
@@ -68,6 +68,13 @@ const Profile = () => {
         avatar: avatar,
       };
 
+      var localStorageUser = {
+        nameid : updatedUser.id,
+        fullname : updatedUser.name,
+        avatar : updatedUser.avatar,
+      }
+      localStorage.setItem("user", JSON.stringify(localStorageUser));
+      localStorage.setItem("avatar", JSON.stringify({avatar : updatedUser.avatar}));
       navigator("/profile", { state: updatedUser });
     } else {
       toast.error(res.message);

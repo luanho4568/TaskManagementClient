@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import userApi from "../api/userApi";
+import userApi from "../../api/Client/userApi";
 import { useState } from "react";
 
 const Home = () => {

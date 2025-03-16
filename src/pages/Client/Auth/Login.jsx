@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "../../components/layout/AuthLayout";
 import { FaUser, FaLock, FaGoogle, FaArrowRight } from "react-icons/fa6";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import authApi from "../../api/authApi";
+import authApi from "../../../api/Client/authApi";
+import AuthLayout from "../../../components/layout/Client/AuthLayout";
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ setIsLoggedIn, checkLogin }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +26,8 @@ const Login = ({ setIsLoggedIn }) => {
     if (res.status === 0) {
       toast.success(res.message);
       localStorage.setItem("token", res.token);
+      localStorage.setItem("avatar", res.avatar);
+      await checkLogin();
       setIsLoggedIn(true);
     } else if (res.status === -1) {
       toast.error(res.message);
