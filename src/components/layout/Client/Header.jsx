@@ -10,14 +10,13 @@ import { toast } from "react-toastify";
 import userApi from "../../../api/Client/userApi";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ setIsLoggedIn, checkLogin }) => {
+const Header = ({ setIsLoggedIn, checkLogin, setIsInGroup, isIngroup }) => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [user, setUser] = useState({});
-
+  console.log(">>> check isInGroup : ", isIngroup);
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user")) || {};
     setUser(storedUser);
-    console.log(">>> check user : ", storedUser);
   }, []);
 
   const navigator = useNavigate();
@@ -33,7 +32,7 @@ const Header = ({ setIsLoggedIn, checkLogin }) => {
         localStorage.clear();
         toast.success(res.message);
         setIsLoggedIn(false);
-       await checkLogin();
+        await checkLogin();
         navigator("/");
       } else {
         toast.error(res.message);
@@ -61,16 +60,31 @@ const Header = ({ setIsLoggedIn, checkLogin }) => {
     toast.info("Sắp diễn ra...");
     toggleDropdown(null);
   };
+
+  const handleBack = () => {
+    navigator(-1);
+  };
+  useEffect(() => {
+    if (window.location.pathname === "/") {
+      setIsInGroup(false);
+      localStorage.setItem("isIngroup", "false");
+    }
+  }, [window.location.pathname]);
   return (
     <div className="w-full h-16 host-bg text-white flex items-center justify-between px-4 shadow-md fixed top-0 left-0 z-50">
-      <button
-        className="bg-red-500 px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600"
-        onClick={handleLogout}
+      {isIngroup && (
+        <button
+          className="bg-red-500 px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600"
+          onClick={handleBack}
+        >
+          <FaSignOutAlt className="rotate-180" /> Quay lại
+        </button>
+      )}
+      <div
+        className={`flex items-center gap-4 relative ${
+          !isIngroup ? "ml-auto" : ""
+        }`}
       >
-        <FaSignOutAlt className="rotate-180" /> Logout
-      </button>
-
-      <div className="flex items-center gap-4 relative">
         <div className="relative">
           <FaRegCommentDots
             className="w-6 h-6 cursor-pointer"
@@ -116,10 +130,16 @@ const Header = ({ setIsLoggedIn, checkLogin }) => {
                 Tài liệu
               </p>
               <p
-                className="p-2 cursor-pointer hover:bg-gray-100"
+                className="border-b p-2 cursor-pointer hover:bg-gray-100"
                 onClick={handleGetProfile}
               >
                 Hồ sơ
+              </p>
+              <p
+                className="p-2 cursor-pointer hover:bg-gray-100"
+                onClick={handleLogout}
+              >
+                Đăng xuất
               </p>
             </div>
           )}

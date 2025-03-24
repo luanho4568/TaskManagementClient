@@ -4,25 +4,52 @@ import Group from "../../../pages/Client/Group/Group";
 import Register from "../../../pages/Client/Auth/Register";
 import Profile from "../../../pages/Client/Profile/Profile";
 import Header from "./Header";
+import GroupDetail from "../../../pages/Client/GroupDetail/GroupDetail";
+import { useEffect, useState } from "react";
 
-const Layout = ({ isLoggedIn, setIsLoggedIn, checkLogin, userLocalStorage }) => {
+const Layout = ({
+  isLoggedIn,
+  setIsLoggedIn,
+  checkLogin,
+  userLocalStorage,
+}) => {
+  const [isIngroup, setIsInGroup] = useState(
+    JSON.parse(localStorage.getItem("isIngroup")) || false
+  );
+  
+  useEffect(() => {
+    localStorage.setItem("isIngroup", JSON.stringify(isIngroup));
+  }, [isIngroup]);
+  
   return (
     <>
-      {isLoggedIn && <Header setIsLoggedIn={setIsLoggedIn}  checkLogin={checkLogin} userLocalStorage={userLocalStorage}/>}
+      {isLoggedIn && (
+        <Header
+          setIsLoggedIn={setIsLoggedIn}
+          checkLogin={checkLogin}
+          userLocalStorage={userLocalStorage}
+          isIngroup={isIngroup}
+          setIsInGroup={setIsInGroup}
+        />
+      )}
       <Routes>
         <Route
           path="/"
           element={
             isLoggedIn ? (
-              <Group />
+              <Group setIsInGroup={setIsInGroup} />
             ) : (
               <Login setIsLoggedIn={setIsLoggedIn} checkLogin={checkLogin} />
             )
           }
         />
         <Route path="/register" element={<Register />} />
-        <Route path="/group" element={isLoggedIn ? <Group /> : <Navigate to="/" />} />
+        <Route
+          path="/group"
+          element={isLoggedIn ? <Group /> : <Navigate to="/" />}
+        />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/group-detail" element={<GroupDetail />} />
       </Routes>
     </>
   );

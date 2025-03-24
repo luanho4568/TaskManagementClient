@@ -16,7 +16,6 @@ const useAuth = () => {
     try {
       const res = await authApi.CheckToken();
       if (res.status === 0) {
-        console.log(">>> check res : ", res.data);
         const newUser = {
           nameid: res.data.nameid,
           fullname: res.data.unique_name,
