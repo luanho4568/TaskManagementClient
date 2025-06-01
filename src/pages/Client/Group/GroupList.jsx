@@ -66,7 +66,7 @@ const GroupList = ({ setIsInGroup }) => {
       const res = await groupApi.joinGroup(id);
       if (res.status === 0) {
         setIsInGroup(true);
-        navigator("/group-detail", { groupId: id });
+        navigator("/group-detail", { state: { groupId: id } });
       } else {
         showError(res.message);
       }

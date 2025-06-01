@@ -6,6 +6,7 @@ import Profile from "../../../pages/Client/Profile/Profile";
 import Header from "./Header";
 import GroupDetail from "../../../pages/Client/GroupDetail/GroupDetail";
 import { useEffect, useState } from "react";
+import ChatPage from "../../../pages/Client/ChatGroup/ChatPage";
 
 const Layout = ({
   isLoggedIn,
@@ -50,6 +51,7 @@ const Layout = ({
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/group-detail" element={<GroupDetail />} />
+        <Route path="/chat-group" element={<ChatPage />} />
       </Routes>
     </>
   );

@@ -82,7 +82,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="w-full flex justify-center items-center pt-20 h-screen sub-bg">
+    <div className="w-full flex justify-center items-center h-[90vh] sub-bg">
       <div className="w-full max-w-3xl h-5/6 bg-white shadow-lg rounded-xl p-6 flex">
         {/* Cột trái - Avatar và một số thông tin */}
         <div className="w-2/5 flex flex-col items-center border-r pr-4">

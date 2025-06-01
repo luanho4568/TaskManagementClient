@@ -71,7 +71,7 @@ const Header = ({ setIsLoggedIn, checkLogin, setIsInGroup, isIngroup }) => {
     }
   }, [window.location.pathname]);
   return (
-    <div className="w-full h-16 host-bg text-white flex items-center justify-between px-4 shadow-md fixed top-0 left-0 z-50">
+    <div className="w-full h-16 host-bg text-white flex items-center justify-between px-4 shadow-md top-0 left-0 z-50 relative">
       {isIngroup && (
         <button
           className="bg-red-500 px-4 py-2 rounded-md flex items-center gap-2 hover:bg-red-600"
