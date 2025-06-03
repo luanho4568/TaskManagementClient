@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaTrash, FaUpload } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import userApi from "../../../api/Client/userApi";
+import userApi from "../../api/userApi";
 import { toast } from "react-toastify";
 
 const Profile = () => {

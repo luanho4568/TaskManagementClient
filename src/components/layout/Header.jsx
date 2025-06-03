@@ -5,9 +5,9 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import authApi from "../../../api/Client/authApi";
+import authApi from "../../api/authApi";
 import { toast } from "react-toastify";
-import userApi from "../../../api/Client/userApi";
+import userApi from "../../api/userApi";
 import { useNavigate } from "react-router-dom";
 
 const Header = ({ setIsLoggedIn, checkLogin, setIsInGroup, isIngroup }) => {

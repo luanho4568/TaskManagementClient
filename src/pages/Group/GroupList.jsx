@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import GroupItem from "./GroupItem";
 import JoinGroupPopup from "./JoinGroupPopup";
 import CreateGroupPopup from "./CreateGroupPopup";
-import groupApi from "../../../api/Client/groupApi";
+import groupApi from "../../api/groupApi";
 import {
   showConfirm,
   showError,
   showSuccess,
-} from "../../../helper/alertHelper";
+} from "../../helper/alertHelper";
 import { useNavigate } from "react-router-dom";
 
 const GroupList = ({ setIsInGroup }) => {
@@ -66,7 +66,7 @@ const GroupList = ({ setIsInGroup }) => {
       const res = await groupApi.joinGroup(id);
       if (res.status === 0) {
         setIsInGroup(true);
-        navigator("/group-detail", { state: { groupId: id } });
+        navigator("/group-detail", { state: { groupId: id , role: res.role} });
       } else {
         showError(res.message);
       }

@@ -1,12 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../../../pages/Client/Auth/Login";
-import Group from "../../../pages/Client/Group/Group";
-import Register from "../../../pages/Client/Auth/Register";
-import Profile from "../../../pages/Client/Profile/Profile";
-import Header from "./Header";
-import GroupDetail from "../../../pages/Client/GroupDetail/GroupDetail";
+import Login from "../../pages/Auth/Login";
+import Group from "../../pages/Group/Group";
+import Register from "../../pages/Auth/Register";
+import Profile from "../../pages/Profile/Profile";
+import GroupDetail from "../../pages/GroupDetail/GroupDetail";
 import { useEffect, useState } from "react";
-import ChatPage from "../../../pages/Client/ChatGroup/ChatPage";
+import ChatPage from "../../pages/ChatGroup/ChatPage";
+import GroupSettingsPage from "../../pages/GroupSetting/GroupSettingsPage";
+import Header from "./Header";
 
 const Layout = ({
   isLoggedIn,
@@ -52,6 +53,7 @@ const Layout = ({
         <Route path="/profile" element={<Profile />} />
         <Route path="/group-detail" element={<GroupDetail />} />
         <Route path="/chat-group" element={<ChatPage />} />
+        <Route path="/group-settings" element={<GroupSettingsPage />} />
       </Routes>
     </>
   );

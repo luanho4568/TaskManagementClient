@@ -9,8 +9,8 @@ import {
   FaPaperPlane,
 } from "react-icons/fa";
 import GroupInfoModal from "./GroupInfoModal";
-import chatGroupApi from "../../../api/Client/chatGroupApi";
 import { useLocation } from "react-router-dom";
+import chatGroupApi from "../../api/chatGroupApi";
 
 const GroupChatPage = () => {
   const [showSidebar, setShowSidebar] = useState(true);

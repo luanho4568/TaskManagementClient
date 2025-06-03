@@ -1,5 +1,5 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { convertRole } from "../../../utils/convert";
+import { convertRole } from "../../utils/convert";
 
 const GroupItem = ({ group, onDelete, onEdit, onClick }) => {
   return (

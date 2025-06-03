@@ -1,5 +1,4 @@
 import Swal from "sweetalert2";
-import "./../../../assets/css/Client/JoinGroupPopup.css"; // Import file CSS riêng
 
 const JoinGroupPopup = () => {
   const handleJoinGroup = () => {

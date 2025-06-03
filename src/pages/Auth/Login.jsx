@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaGoogle, FaArrowRight } from "react-icons/fa6";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import authApi from "../../../api/Client/authApi";
-import AuthLayout from "../../../components/layout/Client/AuthLayout";
+import authApi from "../../api/authApi";
+import AuthLayout from "../../components/layout/AuthLayout";
 
 const Login = ({ setIsLoggedIn, checkLogin }) => {
   const navigate = useNavigate();

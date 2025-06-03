@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import authApi from "../api/Client/authApi";
+import authApi from "../api/authApi";
 
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);

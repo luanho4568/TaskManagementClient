@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
-import "./../../../assets/css/Client/CreateGroupPopup.css"; // Import file CSS riêng
-import groupApi from "../../../api/Client/groupApi";
-import { showError, showSuccess } from "../../../helper/alertHelper";
+import groupApi from "../../api/groupApi";
+import { showError, showSuccess } from "../../helper/alertHelper";
 
 const CreateGroupPopup = ({ fetchGroups }) => {
   const handleAddGroup = () => {

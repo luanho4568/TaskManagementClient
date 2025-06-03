@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "../../../components/layout/Client/AuthLayout";
 import { FaUser, FaAt, FaLock, FaArrowLeft, FaGoogle } from "react-icons/fa6";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
-import authApi from "../../../api/Client/authApi";
+import authApi from "../../api/authApi";
 
 const Register = () => {
   const navigate = useNavigate();
