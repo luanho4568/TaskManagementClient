@@ -1,22 +1,25 @@
+import groupApi from "../../api/groupApi";
+import "../../assets/css/JoinGroupPopup.css";
 import Swal from "sweetalert2";
+import { showError, showSuccess, showWarning } from "../../helper/alertHelper";
 
 const JoinGroupPopup = () => {
   const handleJoinGroup = () => {
     Swal.fire({
-      title: "Tham gia Nhóm",
+      title: '<h2 class="join-group-title">Tham gia Nhóm</h2>',
       html: `
-        <div class="join-group-container">
-          <label class="join-group-label">Chọn phương thức tham gia</label>
-          <div class="join-group-radio-group">
-            <label class="join-group-radio">
-              <input type="radio" name="joinType" value="link" checked> Link
-            </label>
-            <label class="join-group-radio">
-              <input type="radio" name="joinType" value="id"> ID
-            </label>
-          </div>
-          <input id="joinInput" class="swal2-input join-group-input" placeholder="Nhập link nhóm">
-          <textarea id="joinDesc" class="swal2-textarea join-group-textarea" placeholder="Mô tả hoặc yêu cầu vào nhóm"></textarea>
+        <div class="join-group-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+          <input 
+            id="joinInput" 
+            placeholder="Nhập ID nhóm" 
+            class="join-group-input"
+          />
+          <textarea 
+            id="joinDesc" 
+            placeholder="Mô tả hoặc yêu cầu vào nhóm" 
+            rows="4"
+            class="join-group-textarea"
+          ></textarea>
         </div>
       `,
       showCancelButton: true,
@@ -25,28 +28,35 @@ const JoinGroupPopup = () => {
       cancelButtonText: "Hủy",
       customClass: {
         popup: "join-group-popup",
+        confirmButton: "btn-confirm",
+        cancelButton: "btn-cancel",
+        actions: "join-group-actions",
       },
-      didOpen: () => {
-        document.querySelectorAll("input[name='joinType']").forEach((radio) => {
-          radio.addEventListener("change", (e) => {
-            document.getElementById("joinInput").placeholder =
-              e.target.value === "link" ? "Nhập link nhóm" : "Nhập ID nhóm";
-          });
-        });
-      },
+      buttonsStyling: false,
       preConfirm: () => {
-        const type = document.querySelector("input[name='joinType']:checked").value;
-        const input = document.getElementById("joinInput").value;
-        const desc = document.getElementById("joinDesc").value;
+        const token = document.getElementById("joinInput").value.trim();
+        const description = document.getElementById("joinDesc").value.trim();
 
-        if (!input) {
-          Swal.showValidationMessage("Vui lòng nhập thông tin nhóm");
+        if (!token) {
+          Swal.showValidationMessage("Vui lòng nhập ID nhóm");
+          return false;
         }
-        return { type, input, desc };
+        return { token, description };
       },
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log("Tham gia nhóm:", result.value);
+        try {
+          const response = await groupApi.memberJoinGroup(result.value);
+          if (response.status === 0) {
+            showSuccess(response.message);
+          } else if (response.status === -2) {
+            showWarning(response.message);
+          } else {
+            showError(response.message);
+          }
+        } catch {
+          showError("Đã có lỗi xảy ra khi tham gia nhóm");
+        }
       }
     });
   };
@@ -54,7 +64,7 @@ const JoinGroupPopup = () => {
   return (
     <button
       onClick={handleJoinGroup}
-      className="flex items-center px-4 py-2 bg-green-500 text-white rounded-lg gap-2"
+      className="flex items-center px-4 py-2 bg-[#ada2f2] text-white rounded-lg gap-2 hover:bg-[#988ae6] transition"
     >
       Tham gia Nhóm
     </button>

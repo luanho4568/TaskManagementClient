@@ -1,0 +1,76 @@
+/* Tiêu đề popup với nền màu chủ đạo */
+.join-group-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ada2f2;
+  color: white;
+  padding: 10px 0;
+  border-radius: 8px;
+  margin: -16px -24px 10px -24px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Tổng thể popup */
+.join-group-popup {
+  max-width: 420px !important;
+  border-radius: 12px !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  padding: 20px 24px !important;
+}
+
+/* Input + textarea */
+.join-group-input,
+.join-group-textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 16px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.join-group-textarea {
+  resize: none;
+  height: 100px;
+}
+
+/* Nút hành động */
+.join-group-actions {
+  display: flex !important;
+  justify-content: center;
+  gap: 16px !important;
+  margin-top: 20px;
+}
+
+/* Nút Tham gia (màu chủ đạo) */
+.btn-confirm {
+  background-color: #ada2f2 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+}
+.btn-confirm:hover {
+  background-color: #988ae6 !important;
+}
+
+/* Nút Hủy */
+.btn-cancel {
+  background-color: #e5e7eb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+}
+.btn-cancel:hover {
+  background-color: #d1d5db !important;
+}

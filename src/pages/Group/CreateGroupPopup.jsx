@@ -1,3 +1,4 @@
+import "../../assets/css/CreateGroupPopup.css";
 import Swal from "sweetalert2";
 import groupApi from "../../api/groupApi";
 import { showError, showSuccess } from "../../helper/alertHelper";
@@ -5,19 +6,19 @@ import { showError, showSuccess } from "../../helper/alertHelper";
 const CreateGroupPopup = ({ fetchGroups }) => {
   const handleAddGroup = () => {
     Swal.fire({
-      title: "Tạo Nhóm",
+      title: '<h2 class="create-group-title">Tạo Nhóm</h2>',
       html: `
-        <div class="create-group-container">
-          <div class="flex justify-between items-center">
-            <label for="groupPrivacy" class="swal2-label">Quyền riêng tư:</label>
-            <select id="groupPrivacy" class="swal2-select create-group-select">
+        <div class="create-group-container" style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+          <div class="group-privacy">
+            <label for="groupPrivacy">Quyền riêng tư:</label>
+            <select id="groupPrivacy" class="create-group-select">
               <option value="Public">🔓 Công khai</option>
               <option value="Private">🔒 Riêng tư</option>
               <option value="Restricted">🛑 Hạn chế</option>
             </select>
           </div>
-          <input id="groupName" class="swal2-input create-group-input" placeholder="Nhập tên nhóm">
-          <textarea id="groupDesc" class="swal2-textarea create-group-textarea" placeholder="Mô tả ngắn cho nhóm"></textarea>
+          <input id="groupName" class="create-group-input" placeholder="Nhập tên nhóm" />
+          <textarea id="groupDesc" class="create-group-textarea" placeholder="Mô tả ngắn cho nhóm"></textarea>
         </div>
       `,
       showCancelButton: true,
@@ -25,8 +26,12 @@ const CreateGroupPopup = ({ fetchGroups }) => {
       cancelButtonText: "Hủy",
       reverseButtons: true,
       customClass: {
-        popup: "create-group-popup", // Đặt tên class popup
+        popup: "create-group-popup",
+        confirmButton: "btn-confirm",
+        cancelButton: "btn-cancel",
+        actions: "create-group-actions",
       },
+      buttonsStyling: false,
       preConfirm: () => {
         const name = document.getElementById("groupName").value.trim();
         const ShortDescription = document.getElementById("groupDesc").value.trim();
@@ -58,7 +63,7 @@ const CreateGroupPopup = ({ fetchGroups }) => {
   return (
     <button
       onClick={handleAddGroup}
-      className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg gap-2"
+      className="flex items-center px-4 py-2 bg-[#ada2f2] text-white rounded-lg gap-2 hover:bg-[#988ae6] transition"
     >
       Tạo Nhóm
     </button>

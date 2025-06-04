@@ -1,0 +1,93 @@
+/* Tiêu đề popup */
+.create-group-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ada2f2;
+  color: white;
+  padding: 10px 0;
+  border-radius: 8px;
+  margin: -16px -24px 10px -24px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Tổng thể popup */
+.create-group-popup {
+  max-width: 440px !important;
+  border-radius: 12px !important;
+  font-family: 'Segoe UI', Tahoma, sans-serif !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  padding: 20px 24px !important;
+}
+
+/* Container */
+.create-group-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Quyền riêng tư */
+.group-privacy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.group-privacy label {
+  font-weight: 500;
+  font-size: 15px;
+  text-align: start;
+  width: 180px;
+}
+
+/* Input, Select, Textarea */
+.create-group-input,
+.create-group-textarea,
+.create-group-select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.create-group-textarea {
+  resize: none;
+  height: 90px;
+}
+
+/* Buttons */
+.create-group-actions {
+  display: flex !important;
+  justify-content: center;
+  gap: 16px !important;
+  margin-top: 20px;
+}
+.btn-confirm {
+  background-color: #ada2f2 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+}
+.btn-confirm:hover {
+  background-color: #988ae6 !important;
+}
+.btn-cancel {
+  background-color: #e5e7eb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+}
+.btn-cancel:hover {
+  background-color: #d1d5db !important;
+}

@@ -14,8 +14,8 @@ const GroupDetail = () => {
   const groupId = location.state?.groupId;
   const role = location.state?.role;
   const isOwner = role === "Owner";
+  console.log(role)
   const handleGoToChat = async () => {
-    console.log("groupId", groupId);
     try {
       const res = await chatGroupApi.joinChat(groupId);
       if (res.status === 0) {

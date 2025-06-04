@@ -11,7 +11,6 @@ const Profile = () => {
   // Nhận dữ liệu từ location.state
   const data = location.state || {};
 
-  console.log(">>> check data : ",data)
 
   // State quản lý dữ liệu nhập
   const [avatar, setAvatar] = useState(data.avatar || null);

@@ -25,6 +25,18 @@ export const showError = (message) => {
     confirmButtonColor: "#d33",
   });
 };
+/**
+ * Hiển thị thông báo cảnh báo
+ * @param {string} message - Nội dung cảnh báo
+ */
+export const showWarning = (message) => {
+  Swal.fire({
+    icon: "warning",
+    title: "Warning",
+    text: message,
+    confirmButtonColor: "#f1c40f", // màu vàng cảnh báo
+  });
+};
 
 
 /**
